@@ -16,7 +16,7 @@ namespace TP2
         private double a;
         private double b;
         private int n;
-        private Chart chartHistograma;
+        
 
         public Uniforme(double a, double b, int n)
         {
@@ -24,55 +24,7 @@ namespace TP2
             this.a = a;
             this.b = b;
             this.n = n;
-            //Iniciamos el histograma dentro del form
-            InitializeChart();
-        }
-
-        //Configuramos el histograma
-        private void InitializeChart()
-        {
-            chartHistograma = new Chart();
-            chartHistograma.Size = new Size(600, 400);
-            chartHistograma.Dock = DockStyle.Fill;
-
-            ChartArea chartArea = new ChartArea();
-            chartArea.Position = new ElementPosition(35, 15, 60, 50); // Ajusta el tamaño del ChartArea
-            chartHistograma.ChartAreas.Add(chartArea);
-
-            Series series = new Series();
-            series.ChartType = SeriesChartType.Column;
-            chartHistograma.Series.Add(series);
-
-            Controls.Add(chartHistograma);
-        }
-
-        private void GenerarHistograma(List<double> numerosAleatorios, int cantidadIntervalos)
-        {
-            // Limpiar el chart
-            chartHistograma.Series[0].Points.Clear();
-
-            // Calcular el rango de los datos
-            double min = numerosAleatorios.Min();
-            double max = numerosAleatorios.Max();
-            double rango = max - min;
-
-            // Calcular el ancho de cada intervalo
-            double anchoIntervalo = rango / cantidadIntervalos;
-
-            // Crear los intervalos y contar la frecuencia de cada uno
-            Dictionary<double, int> frecuencias = new Dictionary<double, int>();
-            for (int i = 0; i < cantidadIntervalos; i++)
-            {
-                double intervaloInicio = min + i * anchoIntervalo;
-                double intervaloFin = intervaloInicio + anchoIntervalo;
-                frecuencias[intervaloInicio] = numerosAleatorios.Count(v => v >= intervaloInicio && v < intervaloFin);
-            }
-
-            // Agregar los puntos al Chart
-            foreach (var kvp in frecuencias)
-            {
-                chartHistograma.Series[0].Points.AddXY(kvp.Key.ToString("0.00"), kvp.Value);
-            }
+            
         }
 
         private void Uniforme_Load(object sender, EventArgs e)
@@ -116,30 +68,22 @@ namespace TP2
             }
             else
             {
+                //Genero una lista para guardar los numeros aleatorios
                 List<double> datos = new List<double>();
 
                 //Llenamos la lista con los datos de la tabla que ya tienen distribucion uniforme
                 foreach (DataGridViewRow fila in grdUniforme.Rows)
                 {
-                    if (!fila.IsNewRow) // Verificar si la fila no es la fila de nuevo ingreso
+                    if (!fila.IsNewRow && fila.Cells[1].Value != null)
                     {
-                        // Suponiendo que la columna deseada es la primera columna (índice 0)
-                        DataGridViewCell celda = fila.Cells[1];
-
-                        // Verificar si la celda tiene un valor válido
-                        if (celda.Value != null && celda.Value != DBNull.Value)
-                        {
-                            // Intentar convertir el valor de la celda a double
-                            if (double.TryParse(celda.Value.ToString(), out double valor))
-                            {
-                                datos.Add(valor); // Agregar el valor a la lista
-                            }
-                            
-                        }
+                        datos.Add(double.Parse(fila.Cells[1].Value.ToString()));
                     }
                 }
 
-                GenerarHistograma(datos, int.Parse(cmbIntervalos.SelectedValue.ToString()));
+                int intervalos = int.Parse(cmbIntervalos.SelectedValue.ToString());
+                Histograma histograma = new Histograma(datos, intervalos);
+                histograma.Show();
+                
             }
         }
     }

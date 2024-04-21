@@ -75,8 +75,15 @@ namespace TP2
                         double b = double.Parse(txtB.Text.ToString());
                         int n = int.Parse(txtTamaño.Text.ToString());
 
-                        Uniforme uniforme = new Uniforme(a,b,n);
-                        uniforme.Show();
+                        if (n <= 1000000)
+                        {
+                            Uniforme uniforme = new Uniforme(a, b, n);
+                            uniforme.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ingrese hasta de 1,000,000 de datos...");
+                        }
                     }
                 }
                 else

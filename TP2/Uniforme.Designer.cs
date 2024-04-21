@@ -89,7 +89,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 456);
+            ClientSize = new Size(291, 456);
             Controls.Add(btnGenerarHistograma);
             Controls.Add(label1);
             Controls.Add(cmbIntervalos);
