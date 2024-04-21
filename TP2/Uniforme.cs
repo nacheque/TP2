@@ -83,6 +83,8 @@ namespace TP2
                 int intervalos = int.Parse(cmbIntervalos.SelectedValue.ToString());
                 Histograma histograma = new Histograma(datos, intervalos);
                 histograma.Show();
+
+
                 
             }
         }

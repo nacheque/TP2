@@ -34,6 +34,7 @@
             cmbIntervalos = new ComboBox();
             label1 = new Label();
             btnGenerarHistograma = new Button();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)grdUniforme).BeginInit();
             SuspendLayout();
             // 
@@ -85,11 +86,21 @@
             btnGenerarHistograma.UseVisualStyleBackColor = true;
             btnGenerarHistograma.Click += btnGenerarHistograma_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(19, 457);
+            label2.Name = "label2";
+            label2.Size = new Size(38, 15);
+            label2.TabIndex = 4;
+            label2.Text = "label2";
+            // 
             // Uniforme
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(291, 456);
+            ClientSize = new Size(291, 575);
+            Controls.Add(label2);
             Controls.Add(btnGenerarHistograma);
             Controls.Add(label1);
             Controls.Add(cmbIntervalos);
@@ -110,5 +121,6 @@
         private DataGridViewTextBoxColumn Posicion;
         private DataGridViewTextBoxColumn RND;
         private Button btnGenerarHistograma;
+        private Label label2;
     }
 }
