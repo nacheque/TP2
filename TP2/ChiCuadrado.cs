@@ -6,13 +6,23 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 public class ChiCuadradoTest
 {
     private List<double> datos;
-    private int n;
+    private string distribucion;
 
-    public ChiCuadradoTest(List<double> datos, int n)
+    public ChiCuadradoTest(List<double> datos, string distribucion)
     {
         this.datos = datos;
-        this.n = n;
+        this.distribucion = distribucion;
 
+    }
+
+    public static bool ChiCuadrado(List<double> rnd, string distribucion)
+    {
+        if(distribucion == "Uniforme")
+        {
+            //return ChiCuadradoUniforme(rnd, rnd.Count);
+        }
+
+        return true;
     }
 
     public static int CalcularTamañoIntervalo(int N)
@@ -64,7 +74,7 @@ public class ChiCuadradoTest
         return Math.Sqrt(varianza);
     }
 
-    public static bool ChiCuadradoUniforme(List<double> rnd, int N)
+    public static double ChiCuadradoUniforme(List<double> rnd, int N)
     {
         int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -126,8 +136,10 @@ public class ChiCuadradoTest
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
 
+        //MessageBox.Show("RESULTADO:", chiCuadrado.ToString());
+
         // una vez calculado el chi cuadrado tendriamos que compararlo con el de la tabla y devolver true o false
 
-        return true;
+        return Math.Round(chiCuadrado, 4);
     }
 }

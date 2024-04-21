@@ -35,6 +35,10 @@
             label1 = new Label();
             btnGenerarHistograma = new Button();
             label2 = new Label();
+            btnCC = new Button();
+            txtCC = new TextBox();
+            btnKS = new Button();
+            textBox2 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)grdUniforme).BeginInit();
             SuspendLayout();
             // 
@@ -89,17 +93,55 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
             label2.Location = new Point(19, 457);
             label2.Name = "label2";
-            label2.Size = new Size(38, 15);
+            label2.Size = new Size(194, 28);
             label2.TabIndex = 4;
-            label2.Text = "label2";
+            label2.Text = "Pruebas de Bondad";
+            // 
+            // btnCC
+            // 
+            btnCC.Location = new Point(12, 488);
+            btnCC.Name = "btnCC";
+            btnCC.Size = new Size(97, 40);
+            btnCC.TabIndex = 5;
+            btnCC.Text = "Calcular Chi Cuadrado";
+            btnCC.UseVisualStyleBackColor = true;
+            btnCC.Click += btnCC_Click;
+            // 
+            // txtCC
+            // 
+            txtCC.Location = new Point(115, 498);
+            txtCC.Name = "txtCC";
+            txtCC.Size = new Size(100, 23);
+            txtCC.TabIndex = 6;
+            // 
+            // btnKS
+            // 
+            btnKS.Location = new Point(12, 534);
+            btnKS.Name = "btnKS";
+            btnKS.Size = new Size(97, 40);
+            btnKS.TabIndex = 7;
+            btnKS.Text = "Calcular KS";
+            btnKS.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(115, 540);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(100, 23);
+            textBox2.TabIndex = 8;
             // 
             // Uniforme
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(291, 575);
+            Controls.Add(textBox2);
+            Controls.Add(btnKS);
+            Controls.Add(txtCC);
+            Controls.Add(btnCC);
             Controls.Add(label2);
             Controls.Add(btnGenerarHistograma);
             Controls.Add(label1);
@@ -122,5 +164,9 @@
         private DataGridViewTextBoxColumn RND;
         private Button btnGenerarHistograma;
         private Label label2;
+        private Button btnCC;
+        private TextBox txtCC;
+        private Button btnKS;
+        private TextBox textBox2;
     }
 }

@@ -16,7 +16,7 @@ namespace TP2
         private double a;
         private double b;
         private int n;
-        
+
 
         public Uniforme(double a, double b, int n)
         {
@@ -85,8 +85,28 @@ namespace TP2
                 histograma.Show();
 
 
-                
+
             }
+        }
+
+        private void btnCC_Click(object sender, EventArgs e)
+        {   
+            //Genero una lista para guardar los numeros aleatorios
+            List<double> datos = new List<double>();
+
+            //Llenamos la lista con los datos de la tabla que ya tienen distribucion uniforme
+            foreach (DataGridViewRow fila in grdUniforme.Rows)
+            {
+                if (!fila.IsNewRow && fila.Cells[1].Value != null)
+                {
+                    datos.Add(double.Parse(fila.Cells[1].Value.ToString()));
+                }
+            }
+
+            //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
+            double cc = ChiCuadradoTest.ChiCuadradoUniforme(datos, datos.Count);
+            txtCC.Text = cc.ToString(); 
+            
         }
     }
 }
