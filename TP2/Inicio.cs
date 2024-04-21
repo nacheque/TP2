@@ -86,26 +86,29 @@ namespace TP2
                         }
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Ingrese los paramteros para continuar...");
-                }
             }
             else
             {
                 if (cmbDistribucion.SelectedIndex == 1)
                 {
-                    if (int.Parse(txtMedia.Text.ToString()) < 0)
+                    if (txtMedia.Text == "")
                     {
-                        MessageBox.Show("La media no puede ser negativa");
+                        MessageBox.Show("Ingrese la media");
                     }
                     else
                     {
                         double me = double.Parse(txtMedia.Text.ToString());
                         int n = int.Parse(txtTamaño.Text.ToString());
 
-                        Exponencial exponencial = new Exponencial(me, n);
-                        exponencial.Show();
+                        if (n <= 1000000)
+                        {
+                            Exponencial exponencial = new Exponencial(me, n);
+                            exponencial.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ingrese hasta de 1,000,000 de datos...");
+                        }
                     }
                 }
                 else
@@ -117,8 +120,15 @@ namespace TP2
                         double de = double.Parse(txtDE.Text.ToString());
                         int n = int.Parse(txtTamaño.Text.ToString());
 
-                        Normal normal = new Normal(me, de, n);
-                        normal.Show();
+                        if (n <= 1000000)
+                        {
+                            Normal normal = new Normal(me, de, n);
+                            normal.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ingrese hasta de 1,000,000 de datos...");
+                        }
 
                     }
                 }

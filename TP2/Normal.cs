@@ -60,5 +60,32 @@ namespace TP2
 
             return numeros;
         }
+
+        private void btnGenerarHistograma_Click(object sender, EventArgs e)
+        {
+            if (cmbIntervalos.SelectedIndex == -1)
+            {
+                MessageBox.Show("Ingrese la cantidad de intervalos...");
+            }
+            else
+            {
+                //Genero una lista para guardar los numeros aleatorios
+                List<double> datos = new List<double>();
+
+                //Llenamos la lista con los datos de la tabla que ya tienen distribucion uniforme
+                foreach (DataGridViewRow fila in grdNormal.Rows)
+                {
+                    if (!fila.IsNewRow && fila.Cells[1].Value != null)
+                    {
+                        datos.Add(double.Parse(fila.Cells[1].Value.ToString()));
+                    }
+                }
+
+                int intervalos = int.Parse(cmbIntervalos.SelectedValue.ToString());
+                Histograma histograma = new Histograma(datos, intervalos);
+                histograma.Show();
+
+            }
+        }
     }
 }

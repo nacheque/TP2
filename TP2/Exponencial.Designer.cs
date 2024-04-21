@@ -33,6 +33,7 @@
             RND = new DataGridViewTextBoxColumn();
             label1 = new Label();
             cmbIntervalos = new ComboBox();
+            btnGenerarHistograma = new Button();
             ((System.ComponentModel.ISupportInitialize)grdExponencial).BeginInit();
             SuspendLayout();
             // 
@@ -74,11 +75,22 @@
             cmbIntervalos.Size = new Size(121, 23);
             cmbIntervalos.TabIndex = 4;
             // 
+            // btnGenerarHistograma
+            // 
+            btnGenerarHistograma.Location = new Point(139, 404);
+            btnGenerarHistograma.Name = "btnGenerarHistograma";
+            btnGenerarHistograma.Size = new Size(143, 26);
+            btnGenerarHistograma.TabIndex = 5;
+            btnGenerarHistograma.Text = "Generar Histograma";
+            btnGenerarHistograma.UseVisualStyleBackColor = true;
+            btnGenerarHistograma.Click += btnGenerarHistograma_Click;
+            // 
             // Exponencial
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(292, 450);
+            Controls.Add(btnGenerarHistograma);
             Controls.Add(cmbIntervalos);
             Controls.Add(label1);
             Controls.Add(grdExponencial);
@@ -97,5 +109,6 @@
         private DataGridViewTextBoxColumn RND;
         private Label label1;
         private ComboBox cmbIntervalos;
+        private Button btnGenerarHistograma;
     }
 }
