@@ -85,6 +85,7 @@ public class ChiCuadradoTest
             fe.Add(N / cantIntervalos);
         }
 
+        // se crea una matriz de cantIntervalos filas y 2 columnas
         double[,] intervalos = new double[cantIntervalos, 2];
 
         double minimo = rnd.Min();
@@ -129,16 +130,15 @@ public class ChiCuadradoTest
             }
         }
 
+        //terminado el for que recorre la matriz de intervalos acabamos con 2 vectores
+        //fo[] y fe[] que representan las frecuancias de la lista
         double chiCuadrado = 0;
 
+        //se acumula cada calculo del chi que se realiza para cada fo y fe
         for (int i = 0; i < cantIntervalos; i++)
         {
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
-
-        //MessageBox.Show("RESULTADO:", chiCuadrado.ToString());
-
-        // una vez calculado el chi cuadrado tendriamos que compararlo con el de la tabla y devolver true o false
 
         return Math.Round(chiCuadrado, 4);
     }

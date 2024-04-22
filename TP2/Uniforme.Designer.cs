@@ -38,7 +38,7 @@
             btnCC = new Button();
             txtCC = new TextBox();
             btnKS = new Button();
-            textBox2 = new TextBox();
+            txtKS = new TextBox();
             ((System.ComponentModel.ISupportInitialize)grdUniforme).BeginInit();
             SuspendLayout();
             // 
@@ -125,20 +125,21 @@
             btnKS.TabIndex = 7;
             btnKS.Text = "Calcular KS";
             btnKS.UseVisualStyleBackColor = true;
+            btnKS.Click += btnKS_Click;
             // 
-            // textBox2
+            // txtKS
             // 
-            textBox2.Location = new Point(115, 540);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 8;
+            txtKS.Location = new Point(115, 540);
+            txtKS.Name = "txtKS";
+            txtKS.Size = new Size(100, 23);
+            txtKS.TabIndex = 8;
             // 
             // Uniforme
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(291, 575);
-            Controls.Add(textBox2);
+            Controls.Add(txtKS);
             Controls.Add(btnKS);
             Controls.Add(txtCC);
             Controls.Add(btnCC);
@@ -167,6 +168,6 @@
         private Button btnCC;
         private TextBox txtCC;
         private Button btnKS;
-        private TextBox textBox2;
+        private TextBox txtKS;
     }
 }

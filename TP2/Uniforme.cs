@@ -24,7 +24,7 @@ namespace TP2
             this.a = a;
             this.b = b;
             this.n = n;
-            
+
         }
 
         private void Uniforme_Load(object sender, EventArgs e)
@@ -90,7 +90,7 @@ namespace TP2
         }
 
         private void btnCC_Click(object sender, EventArgs e)
-        {   
+        {
             //Genero una lista para guardar los numeros aleatorios
             List<double> datos = new List<double>();
 
@@ -105,8 +105,26 @@ namespace TP2
 
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
             double cc = ChiCuadradoTest.ChiCuadradoUniforme(datos, datos.Count);
-            txtCC.Text = cc.ToString(); 
-            
+            txtCC.Text = cc.ToString();
+
+        }
+
+        private void btnKS_Click(object sender, EventArgs e)
+        {
+            //Genero una lista para guardar los numeros aleatorios
+            List<double> datos = new List<double>();
+
+            //Llenamos la lista con los datos de la tabla que ya tienen distribucion uniforme
+            foreach (DataGridViewRow fila in grdUniforme.Rows)
+            {
+                if (!fila.IsNewRow && fila.Cells[1].Value != null)
+                {
+                    datos.Add(double.Parse(fila.Cells[1].Value.ToString()));
+                }
+            }
+
+            double ks = KS.KSUniforme(datos, datos.Count);
+            txtKS.Text = ks.ToString();
         }
     }
 }
