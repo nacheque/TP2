@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
+using System.Security.Permissions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class ChiCuadradoTest
@@ -237,4 +238,85 @@ public class ChiCuadradoTest
 
         return 3.14;
     }
-}
+
+    public static double ChiCuadradoExponencial(List<double> rnd, double media)
+    {
+        int N = rnd.Count;
+
+        int cantIntervalos = CalcularTamañoIntervalo(N);
+
+        // se crea una matriz de cantIntervalos filas y 2 columnas
+        double[,] intervalos = new double[cantIntervalos, 2];
+
+        double minimo = rnd.Min();
+        double maximo = rnd.Max();
+        double rango = maximo - minimo;
+        double amplitud = rango / cantIntervalos;
+
+        double supAnterior = 0;
+
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            if (i == 0)
+            {
+                intervalos[i, 0] = minimo;
+                intervalos[i, 1] = minimo + amplitud;
+                supAnterior = minimo + amplitud;
+            }
+            else
+            {
+                intervalos[i, 0] = supAnterior;
+                intervalos[i, 1] = supAnterior + amplitud;
+                supAnterior = supAnterior + amplitud;
+            }
+        }
+
+        List<int> fo = new List<int>();
+
+        // Agregar n valores en 0 a la lista
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            fo.Add(0);
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < cantIntervalos; j++)
+            {
+                if (rnd[i] >= intervalos[j, 0] && rnd[i] < intervalos[j, 1])
+                {
+                    fo[j]++;
+                }
+            }
+        }
+
+        double probabilidadEsperada;
+        double lambda = 1 / media;
+        double e = Math.E;
+        double limInf;
+        double limSup;
+
+        // frecuencia esperada de la distribucion exponencial negativa
+        List<double> fe = new List<double>();
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            limInf = intervalos[i, 0];
+            limSup = intervalos[i, 1];
+            probabilidadEsperada = (1 - Math.Pow(e, -lambda * limSup)) - (1 - Math.Pow(e, -lambda * limInf));
+            fe.Add(probabilidadEsperada * N);
+        }
+
+        //terminado el for que recorre la matriz de intervalos acabamos con 2 vectores
+        //fo[] y fe[] que representan las frecuancias de la lista
+        double chiCuadrado = 0;
+
+        //se acumula cada calculo del chi que se realiza para cada fo y fe
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
+        }
+
+        return Math.Round(chiCuadrado, 4);
+
+    }
+    }
