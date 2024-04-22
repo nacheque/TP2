@@ -15,16 +15,6 @@ public class ChiCuadradoTest
 
     }
 
-    public static bool ChiCuadrado(List<double> rnd, string distribucion)
-    {
-        if(distribucion == "Uniforme")
-        {
-            //return ChiCuadradoUniforme(rnd, rnd.Count);
-        }
-
-        return true;
-    }
-
     public static int CalcularTamañoIntervalo(int N)
     {
         double raiz = Math.Sqrt(N);
@@ -136,10 +126,68 @@ public class ChiCuadradoTest
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
 
-        //MessageBox.Show("RESULTADO:", chiCuadrado.ToString());
-
-        // una vez calculado el chi cuadrado tendriamos que compararlo con el de la tabla y devolver true o false
-
         return Math.Round(chiCuadrado, 4);
+    }
+
+    public static double ChiCuadradoNormal(List<double> rnd)
+    {
+        int N = rnd.Count;
+
+        int cantIntervalos = CalcularTamañoIntervalo(N);
+
+        double media = rnd.Average();
+
+        double de = CalcularDE(rnd, media, N);
+
+        double[,] intervalos = new double[cantIntervalos, 2];
+
+        double minimo = rnd.Min();
+        double maximo = rnd.Max();
+        double rango = maximo - minimo;
+        double amplitud = rango / cantIntervalos;
+
+        double supAnterior = 0;
+
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            if (i == 0)
+            {
+                intervalos[i, 0] = minimo;
+                intervalos[i, 1] = minimo + amplitud;
+                supAnterior = minimo + amplitud;
+            }
+            else
+            {
+                intervalos[i, 0] = supAnterior;
+                intervalos[i, 1] = supAnterior + amplitud;
+                supAnterior = supAnterior + amplitud;
+            }
+        }
+
+        double e = Math.E;
+        double marcaClase = 0;
+
+        //Calculo la frecuencia esperada para la distribucion normal
+        // =(EXP{-0,5*((MarcaClase-Media)/DesvStd)^2})/(DesvStd*RAIZ(2*PI)))*(limiteSup-LimiteInf)
+
+        List<double> fe = new List<double>();
+
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            marcaClase = (intervalos[i, 0] + intervalos[i, 1])/2;
+
+            // Calculamos la probabilidad para cada intervalo
+            double poi = ((Math.Pow(e, -0.5*Math.Pow(((marcaClase-media)/de), 2))) / de * Math.Sqrt(double.Pi * 2)) * (intervalos[i, 1] - intervalos[i, 0]);
+            // Multiplicamos N por la probabilidad de cada intervalo y lo guardamos en el vector de fe
+            fe[i] = poi * N;
+        }
+
+        //ACA DEBE IR EL AGRUPAMIENTO
+
+        List<int> fo = new List<int>();
+
+
+
+        return 3.14;
     }
 }
