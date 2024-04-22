@@ -187,13 +187,16 @@ public class ChiCuadradoTest
 
         double feSum = 0;
         double limiteInferior = 0;
-        double limiteSuperior = 0;
+        double limiteSuperior;
+        bool huboCambioIntervalos = false;
+
         //ACA DEBE IR EL AGRUPAMIENTO
         for(int i = 0; i < cantIntervalos; i++)
         {
             if (fe[i] < 5)
             {
                 feSum = feSum + fe[i];
+                huboCambioIntervalos = true;
             }
             if (limiteInferior == 0)
             {
@@ -207,7 +210,7 @@ public class ChiCuadradoTest
                     feAcum.Add(feSum);
                     intervalosNuevos.Add(new double[,] { { limiteInferior, limiteSuperior } });
                     feSum = 0;
-                    limiteInferior = 0;
+                    limiteInferior = intervalos[0, 1];
 
                 }
             }
@@ -218,7 +221,13 @@ public class ChiCuadradoTest
             }
         }
 
+        if (huboCambioIntervalos)
+        {
+            fe = feAcum;
+        }
+
         List<int> fo = new List<int>();
+
 
 
 
