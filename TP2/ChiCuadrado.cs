@@ -229,14 +229,45 @@ public class ChiCuadradoTest
         if (huboCambioIntervalos)
         {
             fe = feAcum;
+            int cantidadIntervalosNuevos = intervalosNuevos.Count;
+            double[,] matrizIntervalos = new double[cantidadIntervalosNuevos, 2];
+            for (int i = 0; i < cantidadIntervalosNuevos; i++)
+            {
+                matrizIntervalos[i, 0] = intervalosNuevos[i][0, 0]; // Límite inferior
+                matrizIntervalos[i, 1] = intervalosNuevos[i][0, 1]; // Límite superior
+            }
+            intervalos = matrizIntervalos;
+            cantIntervalos = cantidadIntervalosNuevos;
         }
 
         List<int> fo = new List<int>();
 
+        // Agregar n valores en 0 a la lista
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            fo.Add(0);
+        }
 
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < cantIntervalos; j++)
+            {
+                if (rnd[i] >= intervalos[j, 0] && rnd[i] < intervalos[j, 1])
+                {
+                    fo[j]++;
+                }
+            }
+        }
 
+        double chiCuadrado = 0;
 
-        return 3.14;
+        //se acumula cada calculo del chi que se realiza para cada fo y fe
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
+        }
+
+        return Math.Round(chiCuadrado, 4);
     }
 
     public static double ChiCuadradoExponencial(List<double> rnd, double media)
