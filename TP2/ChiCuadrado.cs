@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Security.Permissions;
+using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class ChiCuadradoTest
@@ -49,20 +50,6 @@ public class ChiCuadradoTest
                 return false;
         }
         return true;
-    }
-
-    // esta funcion es para hacer la fe de la normal
-    public static double CalcularDE(List<double> rnd, double media, int N)
-    {
-        double varianza;
-        double acumulador = 0;
-        for (int i = 0; i < rnd.Count; i += 1)
-        {
-            acumulador = acumulador + Math.Pow(rnd[i] - media, 2);
-        }
-        varianza = (1 / (N - 1)) * acumulador;
-
-        return Math.Sqrt(varianza);
     }
 
     public static double ChiCuadradoUniforme(List<double> rnd, int N)
@@ -140,10 +127,6 @@ public class ChiCuadradoTest
 
         int cantIntervalos = CalcularTamañoIntervalo(N);
 
-        //double media = rnd.Average();
-
-        //double de = CalcularDE(rnd, media, N);
-
         double[,] intervalos = new double[cantIntervalos, 2];
 
         double minimo = rnd.Min();
@@ -157,7 +140,7 @@ public class ChiCuadradoTest
         {
             if (i == 0)
             {
-                intervalos[i, 0] = minimo;
+                intervalos[i, 0] = minimo - 1;
                 intervalos[i, 1] = minimo + amplitud;
                 supAnterior = minimo + amplitud;
             }
@@ -169,8 +152,9 @@ public class ChiCuadradoTest
             }
         }
 
-        double e = Math.E;
-        double marcaClase = 0;
+        intervalos[cantIntervalos - 1, 1] = intervalos[cantIntervalos - 1, 1] + 1;
+
+        double marcaClase;
 
         //Calculo la frecuencia esperada para la distribucion normal
         // =(EXP{-0,5*((MarcaClase-Media)/DesvStd)^2})/(DesvStd*RAIZ(2*PI)))*(limiteSup-LimiteInf)
@@ -179,14 +163,25 @@ public class ChiCuadradoTest
 
         for (int i = 0; i < cantIntervalos; i++)
         {
-            marcaClase = (intervalos[i, 0] + intervalos[i, 1])/2;
+            marcaClase = (intervalos[i, 0] + intervalos[i, 1]) / 2;
 
             // Calculamos la probabilidad para cada intervalo
-            double poi = ((Math.Pow(e, -0.5*Math.Pow(((marcaClase-media)/de), 2))) / de * Math.Sqrt(double.Pi * 2)) * (intervalos[i, 1] - intervalos[i, 0]);
+            double poi = ((Math.Pow(Math.E, -0.5 * Math.Pow(((marcaClase - media) / de), 2))) / (de * Math.Sqrt(Math.PI * 2))) * (intervalos[i, 1] - intervalos[i, 0])
+;
             // Multiplicamos N por la probabilidad de cada intervalo y lo guardamos en el vector de fe
             //fe[i] = poi * N;
             fe.Add(poi * N);
         }
+
+        //DEPURACION
+        StringBuilder fe1 = new StringBuilder();
+        fe1.AppendLine("FE:");
+        foreach (int elemento in fe)
+        {
+            fe1.AppendLine(elemento.ToString());
+        }
+
+        System.Windows.Forms.MessageBox.Show(fe1.ToString(), "FE inicial");
 
         List<double> feAcum = new List<double>();
         List<double[,]> intervalosNuevos = new List<double[,]>();
@@ -195,36 +190,59 @@ public class ChiCuadradoTest
         double limiteInferior = 0;
         double limiteSuperior;
         bool huboCambioIntervalos = false;
+        double ultimoLS = 0;
 
-        //ACA DEBE IR EL AGRUPAMIENTO
-        for(int i = 0; i < cantIntervalos; i++)
+        //AGRUPAMIENTO
+        for (int i = 0; i < cantIntervalos; i++)
         {
             if (fe[i] < 5)
             {
                 feSum = feSum + fe[i];
                 huboCambioIntervalos = true;
-            }
-            if (limiteInferior == 0)
-            {
-                limiteInferior = intervalos[i, 1];
+                if (limiteInferior == 0)
+                {
+                    limiteInferior = intervalos[i, 0];
+                }
+                else
+                {
+                    if (limiteInferior < intervalos[i, 0] && feSum >= 5)
+                    {
+                        limiteSuperior = intervalos[i, 1];
+                        feAcum.Add(feSum);
+                        intervalosNuevos.Add(new double[,] { { limiteInferior, limiteSuperior } });
+                        feSum = 0;
+                        limiteInferior = 0;
+                    }
+                }
             }
             else
             {
-                if(limiteInferior < intervalos[i, 0] && feSum >= 5)
+                if (feSum == 0)
                 {
-                    limiteSuperior = intervalos[i, 1];
-                    feAcum.Add(feSum);
-                    intervalosNuevos.Add(new double[,] { { limiteInferior, limiteSuperior } });
+                    feAcum.Add(fe[i]);
+                    intervalosNuevos.Add(new double[,] { { intervalos[i, 0], intervalos[i, 1] } });
+                }
+                else
+                {
+                    feAcum.Add(fe[i] + feSum);
+                    intervalosNuevos.Add(new double[,] { { limiteInferior, intervalos[i, 1] } });
                     feSum = 0;
-                    limiteInferior = intervalos[0, 1];
-
+                    limiteInferior = 0;
                 }
             }
-            if(i+1 == cantIntervalos && feSum > 0)
+
+            if (i == (cantIntervalos - 1) && feSum > 0)
             {
-                feAcum[i - 1] += feSum;
-                intervalosNuevos[i - 1][0, 1] = intervalos[i, 1];
+                ultimoLS = intervalos[i, 1];
             }
+        }
+
+        if(ultimoLS != 0)
+        {
+            feAcum[feAcum.Count - 1] += feSum;
+            double[,] ultimaMatriz = intervalosNuevos[intervalosNuevos.Count - 1];
+            int ultimaFila = ultimaMatriz.GetLength(0) - 1;
+            ultimaMatriz[ultimaFila, 1] = ultimoLS;
         }
 
         if (huboCambioIntervalos)
@@ -253,7 +271,7 @@ public class ChiCuadradoTest
         {
             for (int j = 0; j < cantIntervalos; j++)
             {
-                if (rnd[i] >= intervalos[j, 0] && rnd[i] < intervalos[j, 1])
+                if (rnd[i] >= intervalos[j, 0] && (rnd[i] < intervalos[j, 1] || rnd[i] == intervalos[cantIntervalos -1, 1]))
                 {
                     fo[j]++;
                 }
@@ -262,11 +280,40 @@ public class ChiCuadradoTest
 
         double chiCuadrado = 0;
 
+        //DEPURACION
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.AppendLine("FE:");
+        foreach (int elemento in fe)
+        {
+            mensaje.AppendLine(elemento.ToString());
+        }
+        mensaje.AppendLine();
+        mensaje.AppendLine("FO:");
+
+        foreach (int elemento in fo)
+        {
+            mensaje.AppendLine(elemento.ToString());
+        }
+        
+        System.Windows.Forms.MessageBox.Show(mensaje.ToString(), "Contenido de las listas");
+
+
         //se acumula cada calculo del chi que se realiza para cada fo y fe
         for (int i = 0; i < cantIntervalos; i++)
         {
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
+
+        //DEPURACION
+        StringBuilder mensajeIntervalos = new StringBuilder();
+        mensajeIntervalos.AppendLine("Intervalos:");
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            mensajeIntervalos.AppendLine($"Intervalo {i + 1}: [{intervalos[i, 0]}, {intervalos[i, 1]})");
+        }
+
+        System.Windows.Forms.MessageBox.Show(mensajeIntervalos.ToString(), "Intervalos");
+
 
         return Math.Round(chiCuadrado, 4);
     }
