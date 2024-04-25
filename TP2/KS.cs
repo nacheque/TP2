@@ -135,5 +135,197 @@ namespace TP2
             return Math.Round(maxKS, 4);
         }
 
+        public static double KSExponencial(List<double> rnd, int N, double me)
+        {
+            int cantIntervalos = CalcularTamañoIntervalo(N);
+
+            // se crea una matriz de cantIntervalos filas y 2 columnas
+            double[,] intervalos = new double[cantIntervalos, 2];
+
+            double minimo = rnd.Min();
+            double maximo = rnd.Max();
+            double rango = maximo - minimo;
+            double amplitud = rango / cantIntervalos;
+
+            double supAnterior = 0;
+
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                if (i == 0)
+                {
+                    intervalos[i, 0] = minimo;
+                    intervalos[i, 1] = minimo + amplitud;
+                    supAnterior = minimo + amplitud;
+                }
+                else
+                {
+                    intervalos[i, 0] = supAnterior;
+                    intervalos[i, 1] = supAnterior + amplitud;
+                    supAnterior = supAnterior + amplitud;
+                }
+            }
+
+            List<double> fo = new List<double>();
+
+            // Agregar n valores en 0 a la lista
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                fo.Add(0);
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < cantIntervalos; j++)
+                {
+                    if (rnd[i] >= intervalos[j, 0] && rnd[i] < intervalos[j, 1])
+                    {
+                        fo[j]++;
+                    }
+                }
+            }
+
+            // Probabilidad esperada de la distribucion Exponencial
+            List<double> pr_e = new List<double>();
+            double lambda = 1 / me;
+            double e = Math.E;
+            double limInf;
+            double limSup;
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                limInf = intervalos[i, 0];
+                limSup = intervalos[i, 1];
+                pr_e.Add((1 - Math.Pow(e, -lambda * limSup)) - (1 - Math.Pow(e, -lambda * limInf)));
+            }
+
+
+            double peAc = 0.0;
+            double poAc = 0.0;
+
+            double maxKS = 0.0;
+
+            for (int i = 0; i < fo.Count; i++)
+            {
+                //calcular la prob obs de cada elemento
+                double po = fo[i] / N;
+                double pe = pr_e[i];
+
+                //acumulamos probabilidades
+                poAc = po + poAc;
+                peAc = pe + peAc;
+
+                double ks = Math.Abs(poAc - peAc);
+
+                //comparo con el maxKS actual
+                if (maxKS < ks)
+                {
+                    maxKS = ks;
+                }
+            }
+
+            //return Math.Round(maxKS, 4);
+            return maxKS;
+        }
+
+        public static double KSNormal(List<double> rnd, int N, double me, double de)
+        {
+            int cantIntervalos = CalcularTamañoIntervalo(N);
+
+            // se crea una matriz de cantIntervalos filas y 2 columnas
+            double[,] intervalos = new double[cantIntervalos, 2];
+
+            double minimo = rnd.Min();
+            double maximo = rnd.Max();
+            double rango = maximo - minimo;
+            double amplitud = rango / cantIntervalos;
+
+            double supAnterior = 0;
+
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                if (i == 0)
+                {
+                    intervalos[i, 0] = minimo;
+                    intervalos[i, 1] = minimo + amplitud;
+                    supAnterior = minimo + amplitud;
+                }
+                else
+                {
+                    intervalos[i, 0] = supAnterior;
+                    intervalos[i, 1] = supAnterior + amplitud;
+                    supAnterior = supAnterior + amplitud;
+                }
+            }
+
+            List<double> fo = new List<double>();
+
+            // Agregar n valores en 0 a la lista
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                fo.Add(0);
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < cantIntervalos; j++)
+                {
+                    if (rnd[i] >= intervalos[j, 0] && rnd[i] < intervalos[j, 1])
+                    {
+                        fo[j]++;
+                    }
+                }
+            }
+
+            // Probabilidad esperada de la distribucion Normal
+            List<double> pr_e = new List<double>();
+            double e = Math.E;
+            double limInf;
+            double limSup;
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                limInf = intervalos[i, 0];
+                limSup = intervalos[i, 1];
+                double marcaClase = (limInf + limSup) / 2;
+                double pe_i = (
+                    (1 / (de * Math.Sqrt(2 * Math.PI))) * 
+                    (
+                        Math.Pow(e, (
+                        -0.5 * Math.Pow(((marcaClase - me) / de), 2)
+                        ))
+                    )
+                    );
+                pr_e.Add(pe_i);
+            }
+
+
+            double peAc = 0.0;
+            double poAc = 0.0;
+
+            double maxKS = 0.0;
+
+            for (int i = 0; i < fo.Count; i++)
+            {
+                //calcular la prob obs de cada elemento
+                double po = fo[i] / N;
+                double pe = pr_e[i];
+
+                //acumulamos probabilidades
+                poAc = po + poAc;
+                peAc = pe + peAc;
+
+                double ks = Math.Abs(poAc - peAc);
+
+                //comparo con el maxKS actual
+                if (maxKS < ks)
+                {
+                    maxKS = ks;
+                }
+            }
+
+            //return Math.Round(maxKS, 4);
+            return maxKS;
+        }
+
+
     }
+
 }
