@@ -149,6 +149,7 @@
             Controls.Add(cmbIntervalos);
             Controls.Add(grdUniforme);
             Name = "Uniforme";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Distribucion Uniforme[A,B]";
             Load += Uniforme_Load;
             ((System.ComponentModel.ISupportInitialize)grdUniforme).EndInit();

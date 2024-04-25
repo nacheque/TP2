@@ -34,6 +34,11 @@
             label1 = new Label();
             cmbIntervalos = new ComboBox();
             btnGenerarHistograma = new Button();
+            btnCC = new Button();
+            label2 = new Label();
+            btnKS = new Button();
+            txtCC = new TextBox();
+            txtKS = new TextBox();
             ((System.ComponentModel.ISupportInitialize)grdExponencial).BeginInit();
             SuspendLayout();
             // 
@@ -85,16 +90,66 @@
             btnGenerarHistograma.UseVisualStyleBackColor = true;
             btnGenerarHistograma.Click += btnGenerarHistograma_Click;
             // 
+            // btnCC
+            // 
+            btnCC.Location = new Point(12, 461);
+            btnCC.Name = "btnCC";
+            btnCC.Size = new Size(97, 40);
+            btnCC.TabIndex = 6;
+            btnCC.Text = "Calcular Chi Cuadrado";
+            btnCC.UseVisualStyleBackColor = true;
+            btnCC.Click += btnCC_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            label2.Location = new Point(12, 430);
+            label2.Name = "label2";
+            label2.Size = new Size(194, 28);
+            label2.TabIndex = 7;
+            label2.Text = "Pruebas de Bondad";
+            // 
+            // btnKS
+            // 
+            btnKS.Location = new Point(12, 507);
+            btnKS.Name = "btnKS";
+            btnKS.Size = new Size(97, 40);
+            btnKS.TabIndex = 8;
+            btnKS.Text = "Calcular KS";
+            btnKS.UseVisualStyleBackColor = true;
+            btnKS.Click += btnKS_Click;
+            // 
+            // txtCC
+            // 
+            txtCC.Location = new Point(115, 471);
+            txtCC.Name = "txtCC";
+            txtCC.Size = new Size(100, 23);
+            txtCC.TabIndex = 9;
+            // 
+            // txtKS
+            // 
+            txtKS.Location = new Point(115, 517);
+            txtKS.Name = "txtKS";
+            txtKS.Size = new Size(100, 23);
+            txtKS.TabIndex = 10;
+            // 
             // Exponencial
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(292, 450);
+            ClientSize = new Size(292, 558);
+            Controls.Add(txtKS);
+            Controls.Add(txtCC);
+            Controls.Add(btnKS);
+            Controls.Add(label2);
+            Controls.Add(btnCC);
             Controls.Add(btnGenerarHistograma);
             Controls.Add(cmbIntervalos);
             Controls.Add(label1);
             Controls.Add(grdExponencial);
             Name = "Exponencial";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Exponencial Negativa[me]";
             Load += Poisson_Load;
             ((System.ComponentModel.ISupportInitialize)grdExponencial).EndInit();
@@ -110,5 +165,10 @@
         private Label label1;
         private ComboBox cmbIntervalos;
         private Button btnGenerarHistograma;
+        private Button btnCC;
+        private Label label2;
+        private Button btnKS;
+        private TextBox txtCC;
+        private TextBox txtKS;
     }
 }

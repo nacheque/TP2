@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,6 +81,45 @@ namespace TP2
                 histograma.Show();
 
             }
+        }
+
+        private void btnCC_Click(object sender, EventArgs e)
+        {
+            //Genero una lista para guardar los numeros aleatorios
+            List<double> datos = new List<double>();
+
+            //Llenamos la lista con los datos de la tabla que ya tienen distribucion uniforme
+            foreach (DataGridViewRow fila in grdExponencial.Rows)
+            {
+                if (!fila.IsNewRow && fila.Cells[1].Value != null)
+                {
+                    datos.Add(double.Parse(fila.Cells[1].Value.ToString()));
+                }
+            }
+
+            //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
+            double cc = ChiCuadradoTest.ChiCuadradoExponencial(datos, this.me);
+            txtCC.Text = cc.ToString();
+        }
+
+        private void btnKS_Click(object sender, EventArgs e)
+        {
+            // Genero una lista para guardar los numeros aleatorios
+            List<double> datos = new List<double>();
+
+            //Llenamos la lista con los datos de la tabla que ya tienen distribucion uniforme
+            foreach (DataGridViewRow fila in grdExponencial.Rows)
+            {
+                if (!fila.IsNewRow && fila.Cells[1].Value != null)
+                {
+                    datos.Add(double.Parse(fila.Cells[1].Value.ToString()));
+                }
+            }
+
+
+            //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
+            double cc = KS.KSExponencial(datos, datos.Count, this.me);
+            txtKS.Text = cc.ToString();
         }
     }
 }

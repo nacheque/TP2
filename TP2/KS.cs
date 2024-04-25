@@ -222,8 +222,8 @@ namespace TP2
                 }
             }
 
-            //return Math.Round(maxKS, 4);
-            return maxKS;
+            return Math.Round(maxKS, 4);
+            //return maxKS;
         }
 
         public static double KSNormal(List<double> rnd, int N, double me, double de)
