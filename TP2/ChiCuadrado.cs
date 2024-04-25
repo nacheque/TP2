@@ -134,15 +134,15 @@ public class ChiCuadradoTest
         return Math.Round(chiCuadrado, 4);
     }
 
-    public static double ChiCuadradoNormal(List<double> rnd)
+    public static double ChiCuadradoNormal(List<double> rnd, double media, double de)
     {
         int N = rnd.Count;
 
         int cantIntervalos = CalcularTamañoIntervalo(N);
 
-        double media = rnd.Average();
+        //double media = rnd.Average();
 
-        double de = CalcularDE(rnd, media, N);
+        //double de = CalcularDE(rnd, media, N);
 
         double[,] intervalos = new double[cantIntervalos, 2];
 
@@ -184,7 +184,8 @@ public class ChiCuadradoTest
             // Calculamos la probabilidad para cada intervalo
             double poi = ((Math.Pow(e, -0.5*Math.Pow(((marcaClase-media)/de), 2))) / de * Math.Sqrt(double.Pi * 2)) * (intervalos[i, 1] - intervalos[i, 0]);
             // Multiplicamos N por la probabilidad de cada intervalo y lo guardamos en el vector de fe
-            fe[i] = poi * N;
+            //fe[i] = poi * N;
+            fe.Add(poi * N);
         }
 
         List<double> feAcum = new List<double>();

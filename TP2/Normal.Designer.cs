@@ -34,6 +34,11 @@
             label1 = new Label();
             cmbIntervalos = new ComboBox();
             btnGenerarHistograma = new Button();
+            label2 = new Label();
+            btnCC = new Button();
+            btnKS = new Button();
+            txtCC = new TextBox();
+            txtKS = new TextBox();
             ((System.ComponentModel.ISupportInitialize)grdNormal).BeginInit();
             SuspendLayout();
             // 
@@ -85,17 +90,67 @@
             btnGenerarHistograma.UseVisualStyleBackColor = true;
             btnGenerarHistograma.Click += btnGenerarHistograma_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
+            label2.Location = new Point(12, 427);
+            label2.Name = "label2";
+            label2.Size = new Size(194, 28);
+            label2.TabIndex = 8;
+            label2.Text = "Pruebas de Bondad";
+            // 
+            // btnCC
+            // 
+            btnCC.Location = new Point(12, 458);
+            btnCC.Name = "btnCC";
+            btnCC.Size = new Size(97, 40);
+            btnCC.TabIndex = 9;
+            btnCC.Text = "Calcular Chi Cuadrado";
+            btnCC.UseVisualStyleBackColor = true;
+            btnCC.Click += btnCC_Click;
+            // 
+            // btnKS
+            // 
+            btnKS.Location = new Point(12, 504);
+            btnKS.Name = "btnKS";
+            btnKS.Size = new Size(97, 40);
+            btnKS.TabIndex = 10;
+            btnKS.Text = "Calcular KS";
+            btnKS.UseVisualStyleBackColor = true;
+            btnKS.Click += btnKS_Click;
+            // 
+            // txtCC
+            // 
+            txtCC.Location = new Point(115, 468);
+            txtCC.Name = "txtCC";
+            txtCC.Size = new Size(100, 23);
+            txtCC.TabIndex = 11;
+            // 
+            // txtKS
+            // 
+            txtKS.Location = new Point(115, 514);
+            txtKS.Name = "txtKS";
+            txtKS.Size = new Size(100, 23);
+            txtKS.TabIndex = 12;
+            // 
             // Normal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(288, 450);
+            ClientSize = new Size(288, 558);
+            Controls.Add(txtKS);
+            Controls.Add(txtCC);
+            Controls.Add(btnKS);
+            Controls.Add(btnCC);
+            Controls.Add(label2);
             Controls.Add(btnGenerarHistograma);
             Controls.Add(cmbIntervalos);
             Controls.Add(label1);
             Controls.Add(grdNormal);
             Name = "Normal";
-            Text = "Normal";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Normal[me, de]";
             Load += Normal_Load;
             ((System.ComponentModel.ISupportInitialize)grdNormal).EndInit();
             ResumeLayout(false);
@@ -110,5 +165,10 @@
         private Label label1;
         private ComboBox cmbIntervalos;
         private Button btnGenerarHistograma;
+        private Label label2;
+        private Button btnCC;
+        private Button btnKS;
+        private TextBox txtCC;
+        private TextBox txtKS;
     }
 }

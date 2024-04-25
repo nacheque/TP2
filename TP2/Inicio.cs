@@ -20,8 +20,6 @@ namespace TP2
             cmbDistribucion.DataSource = list;
             cmbDistribucion.SelectedIndex = -1;
 
-            
-
         }
         private void cmbDistribucion_SelectionChangeCommitted(object sender, EventArgs e)
         {
