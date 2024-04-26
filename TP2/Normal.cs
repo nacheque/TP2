@@ -58,6 +58,18 @@ namespace TP2
                 numeros.Add(numero);
             }
 
+            if (cantidad % 2 != 0)
+            {
+                double u = random.NextDouble();
+                double z = Math.Sqrt(-2.0 * Math.Log(u)) * Math.Cos(2.0 * Math.PI * u); // Aplicar Box-Muller
+
+                double numero = media + desviacionEstandar * z; // Aplicar transformación de media y desviación estándar
+
+                numero = Math.Round(numero, 4);
+
+                numeros.Add(numero);
+            }
+
             return numeros;
         }
 
