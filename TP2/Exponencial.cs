@@ -98,7 +98,7 @@ namespace TP2
             }
 
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            double cc = ChiCuadradoTest.ChiCuadradoExponencial(datos, this.me);
+            (double cc, int v) = ChiCuadradoTest.ChiCuadradoExponencial(datos, this.me);
             txtCC.Text = cc.ToString();
         }
 

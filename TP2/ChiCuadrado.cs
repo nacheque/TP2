@@ -52,7 +52,7 @@ public class ChiCuadradoTest
         return true;
     }
 
-    public static double ChiCuadradoUniforme(List<double> rnd, int N)
+    public static (double, int) ChiCuadradoUniforme(List<double> rnd, int N)
     {
         int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -119,10 +119,10 @@ public class ChiCuadradoTest
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
 
-        return Math.Round(chiCuadrado, 4);
+        return (Math.Round(chiCuadrado, 4), cantIntervalos - 1);
     }
 
-    public static double ChiCuadradoNormal(List<double> rnd, double media, double de)
+    public static (double, int) ChiCuadradoNormal(List<double> rnd, double media, double de)
     {
         int N = rnd.Count;
 
@@ -287,10 +287,10 @@ public class ChiCuadradoTest
         
 
 
-        return Math.Round(chiCuadrado, 4);
+        return (Math.Round(chiCuadrado, 4), cantIntervalos - 3);
     }
 
-    public static double ChiCuadradoExponencial(List<double> rnd, double media)
+    public static (double, int) ChiCuadradoExponencial(List<double> rnd, double media)
     {
         int N = rnd.Count;
 
@@ -367,7 +367,7 @@ public class ChiCuadradoTest
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
 
-        return Math.Round(chiCuadrado, 4);
+        return (Math.Round(chiCuadrado, 4), cantIntervalos - 2);
 
     }
     }

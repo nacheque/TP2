@@ -104,7 +104,7 @@ namespace TP2
             }
 
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            double cc = ChiCuadradoTest.ChiCuadradoUniforme(datos, n);
+            (double cc, int v) = ChiCuadradoTest.ChiCuadradoUniforme(datos, n);
             txtCC.Text = cc.ToString();
 
         }
