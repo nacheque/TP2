@@ -100,6 +100,7 @@ namespace TP2
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
             (double cc, int v) = ChiCuadradoTest.ChiCuadradoExponencial(datos, this.me);
             txtCC.Text = cc.ToString();
+            txtV.Text = v.ToString();
         }
 
         private void btnKS_Click(object sender, EventArgs e)

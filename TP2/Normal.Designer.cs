@@ -39,6 +39,8 @@
             btnKS = new Button();
             txtCC = new TextBox();
             txtKS = new TextBox();
+            label3 = new Label();
+            txtV = new TextBox();
             ((System.ComponentModel.ISupportInitialize)grdNormal).BeginInit();
             SuspendLayout();
             // 
@@ -134,11 +136,29 @@
             txtKS.Size = new Size(100, 23);
             txtKS.TabIndex = 12;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(229, 471);
+            label3.Name = "label3";
+            label3.Size = new Size(24, 15);
+            label3.TabIndex = 13;
+            label3.Text = "v =";
+            // 
+            // txtV
+            // 
+            txtV.Location = new Point(255, 468);
+            txtV.Name = "txtV";
+            txtV.Size = new Size(27, 23);
+            txtV.TabIndex = 14;
+            // 
             // Normal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(288, 558);
+            Controls.Add(txtV);
+            Controls.Add(label3);
             Controls.Add(txtKS);
             Controls.Add(txtCC);
             Controls.Add(btnKS);
@@ -170,5 +190,7 @@
         private Button btnKS;
         private TextBox txtCC;
         private TextBox txtKS;
+        private Label label3;
+        private TextBox txtV;
     }
 }
