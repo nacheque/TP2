@@ -12,7 +12,7 @@ namespace TP2
         {
             double raiz = Math.Sqrt(N);
 
-            int primoCercano = EncontrarPrimoCercanoMenor((int)Math.Floor(raiz));
+            int primoCercano = EncontrarPrimoCercanoMenor((int)Math.Floor(raiz)+1);
 
             return primoCercano;
         }
@@ -20,7 +20,7 @@ namespace TP2
         public static int EncontrarPrimoCercanoMenor(int numero)
         {
             // Buscar el primo más cercano menor que el número dado
-            for (int i = numero; i >= 2; i--)
+            for (int i = numero; i >= 2; i++)
             {
                 if (EsPrimo(i))
                 {
@@ -80,6 +80,7 @@ namespace TP2
                     supAnterior = supAnterior + amplitud;
                 }
             }
+
 
             List<double> fo = new List<double>();
 
@@ -285,14 +286,9 @@ namespace TP2
                 limInf = intervalos[i, 0];
                 limSup = intervalos[i, 1];
                 double marcaClase = (limInf + limSup) / 2;
-                double pe_i = (
-                    (1 / (de * Math.Sqrt(2 * Math.PI))) * 
-                    (
-                        Math.Pow(e, (
-                        -0.5 * Math.Pow(((marcaClase - me) / de), 2)
-                        ))
-                    )
-                    );
+                double exponente = -Math.Pow((marcaClase - me), 2) / (2 * Math.Pow(de, 2));
+                double denominador = de * Math.Sqrt(2 * Math.PI);
+                double pe_i = Math.Pow(e, exponente) / denominador * (limSup-limInf);
                 pr_e.Add(pe_i);
             }
 
@@ -302,17 +298,23 @@ namespace TP2
 
             double maxKS = 0.0;
 
-            for (int i = 0; i < fo.Count; i++)
+
+            for (int i = 0; i < cantIntervalos; i++)
             {
                 //calcular la prob obs de cada elemento
-                double po = fo[i] / N;
+                double po = fo[i] / rnd.Count();
+
                 double pe = pr_e[i];
 
                 //acumulamos probabilidades
                 poAc = po + poAc;
                 peAc = pe + peAc;
 
+
+                
+
                 double ks = Math.Abs(poAc - peAc);
+
 
                 //comparo con el maxKS actual
                 if (maxKS < ks)
@@ -320,6 +322,7 @@ namespace TP2
                     maxKS = ks;
                 }
             }
+
 
             return Math.Round(maxKS, 4);
             //return maxKS;

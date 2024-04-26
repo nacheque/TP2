@@ -123,7 +123,7 @@ namespace TP2
 
 
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            double cc = KS.KSNormal(datos, datos.Count, this.me, this.de);
+            double cc = KS.KSNormal(datos, this.n, this.me, this.de);
             txtKS.Text = cc.ToString();
         }
     }

@@ -21,7 +21,7 @@ public class ChiCuadradoTest
     {
         double raiz = Math.Sqrt(N);
 
-        int primoCercano = EncontrarPrimoCercanoMenor((int)Math.Floor(raiz));
+        int primoCercano = EncontrarPrimoCercanoMenor((int)Math.Floor(raiz) + 1);
 
         return primoCercano;
     }
@@ -29,7 +29,7 @@ public class ChiCuadradoTest
     public static int EncontrarPrimoCercanoMenor(int numero)
     {
         // Buscar el primo más cercano menor que el número dado
-        for (int i = numero; i >= 2; i--)
+        for (int i = numero; i >= 2; i++)
         {
             if (EsPrimo(i))
             {
@@ -88,6 +88,7 @@ public class ChiCuadradoTest
                 supAnterior = supAnterior + amplitud;
             }
         }
+
 
         List<int> fo = new List<int>();
 
@@ -174,14 +175,6 @@ public class ChiCuadradoTest
         }
 
         //DEPURACION
-        StringBuilder fe1 = new StringBuilder();
-        fe1.AppendLine("FE:");
-        foreach (int elemento in fe)
-        {
-            fe1.AppendLine(elemento.ToString());
-        }
-
-        System.Windows.Forms.MessageBox.Show(fe1.ToString(), "FE inicial");
 
         List<double> feAcum = new List<double>();
         List<double[,]> intervalosNuevos = new List<double[,]>();
@@ -281,21 +274,7 @@ public class ChiCuadradoTest
         double chiCuadrado = 0;
 
         //DEPURACION
-        StringBuilder mensaje = new StringBuilder();
-        mensaje.AppendLine("FE:");
-        foreach (int elemento in fe)
-        {
-            mensaje.AppendLine(elemento.ToString());
-        }
-        mensaje.AppendLine();
-        mensaje.AppendLine("FO:");
-
-        foreach (int elemento in fo)
-        {
-            mensaje.AppendLine(elemento.ToString());
-        }
         
-        System.Windows.Forms.MessageBox.Show(mensaje.ToString(), "Contenido de las listas");
 
 
         //se acumula cada calculo del chi que se realiza para cada fo y fe
@@ -305,14 +284,7 @@ public class ChiCuadradoTest
         }
 
         //DEPURACION
-        StringBuilder mensajeIntervalos = new StringBuilder();
-        mensajeIntervalos.AppendLine("Intervalos:");
-        for (int i = 0; i < cantIntervalos; i++)
-        {
-            mensajeIntervalos.AppendLine($"Intervalo {i + 1}: [{intervalos[i, 0]}, {intervalos[i, 1]})");
-        }
-
-        System.Windows.Forms.MessageBox.Show(mensajeIntervalos.ToString(), "Intervalos");
+        
 
 
         return Math.Round(chiCuadrado, 4);
