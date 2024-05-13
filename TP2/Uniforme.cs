@@ -103,10 +103,23 @@ namespace TP2
                 }
             }
 
+            List<double> limInf = new List<double>();
+            List<double> limSup = new List<double>();
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            (double cc, int v) = ChiCuadradoTest.ChiCuadradoUniforme(datos, n);
+            (double cc, int v, limInf, limSup) = ChiCuadradoTest.ChiCuadradoUniforme(datos, n);
             txtCC.Text = cc.ToString();
             txtV.Text = v.ToString();
+
+            if (grdTablaChi.Rows.Count < limInf.Count)
+            {
+                grdTablaChi.Rows.Add(limInf.Count - grdTablaChi.Rows.Count);
+            }
+
+            for (int i = 0; i < limInf.Count; i++)
+            {
+                grdTablaChi.Rows[i].Cells["LIChi"].Value = limInf[i].ToString();
+                grdTablaChi.Rows[i].Cells["LSChi"].Value = limSup[i].ToString();
+            }
 
         }
 

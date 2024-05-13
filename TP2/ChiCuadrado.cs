@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Security.Permissions;
 using System.Text;
+using TP2;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Object = System.Object;
 
 public class ChiCuadradoTest
 {
     private List<double> datos;
     private string distribucion;
+    private Object uniforme;
 
-    public ChiCuadradoTest(List<double> datos, string distribucion)
+    public ChiCuadradoTest(List<double> datos, string distribucion, Object unifrome)
     {
         this.datos = datos;
         this.distribucion = distribucion;
+        this.uniforme = unifrome;
 
     }
 
@@ -52,7 +56,7 @@ public class ChiCuadradoTest
         return true;
     }
 
-    public static (double, int) ChiCuadradoUniforme(List<double> rnd, int N)
+    public static (double, int, List<double>, List<double>) ChiCuadradoUniforme(List<double> rnd, int N)
     {
         int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -89,6 +93,18 @@ public class ChiCuadradoTest
             }
         }
 
+        //intento de llenar el DataGridView con los valores de la matriz de intervalos
+        // el vector intervalos por cada fila i tiene los dos valores de los limites
+        List<double> limInf = new List<double>();
+        List<double> limSup = new List<double>();
+
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            limInf.Add(intervalos[i, 0]);
+            limSup.Add(intervalos[i, 1]);
+        }
+        
+        
 
         List<int> fo = new List<int>();
 
@@ -119,7 +135,7 @@ public class ChiCuadradoTest
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
         }
 
-        return (Math.Round(chiCuadrado, 4), cantIntervalos - 1);
+        return (Math.Round(chiCuadrado, 4), cantIntervalos - 1, limInf, limSup);
     }
 
     public static (double, int) ChiCuadradoNormal(List<double> rnd, double media, double de)
