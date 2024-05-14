@@ -43,7 +43,9 @@ namespace TP2
             return true;
         }
 
-        public static double KSUniforme(List<double> rnd, int N)
+        public static (double, List<double>, List<double>, List<double>, List<double>,
+            List<double>, List<double>, List<double>, List<double>,
+            List<double>, List<double>) KSUniforme(List<double> rnd, int N)
         {
             int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -53,7 +55,7 @@ namespace TP2
             {
                 fe.Add(N / cantIntervalos);
             }
-            
+
 
             // se crea una matriz de cantIntervalos filas y 2 columnas
             double[,] intervalos = new double[cantIntervalos, 2];
@@ -79,6 +81,17 @@ namespace TP2
                     intervalos[i, 1] = supAnterior + amplitud;
                     supAnterior = supAnterior + amplitud;
                 }
+            }
+
+            //intento de llenar el DataGridView con los valores de la matriz de intervalos
+            // el vector intervalos por cada fila i tiene los dos valores de los limites
+            List<double> limInf = new List<double>();
+            List<double> limSup = new List<double>();
+
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                limInf.Add(Math.Round(intervalos[i, 0], 4));
+                limSup.Add(Math.Round(intervalos[i, 1], 4));
             }
 
 
@@ -107,7 +120,24 @@ namespace TP2
             //se calcula la probabilidad esperada para una dist uniforme
             double pe = fe[0] / N;
 
-            //double pe = 0.01;
+            //vectores para mostrar las prob esperadas y esperadas acumuladas
+            List<double> probEsperadas = new List<double>();
+            List<double> probEspAC = new List<double>();
+            double peAC = 0;
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                probEsperadas.Add(Math.Round(pe, 4));
+                peAC += Math.Round(pe, 4);
+                probEspAC.Add(peAC);
+            }
+
+            //vectores para mostrar las prob observadas y observadas acumuladas
+            List<double> probObservadas = new List<double>();
+            List<double> probObsAC = new List<double>();
+
+            //vectores para mostrar el ks y el max ks
+            List<double> ksUnitarios = new List<double>();
+            List<double> maxKSv = new List<double>();
 
             double peAc = 0.0;
             double poAc = 0.0;
@@ -116,24 +146,33 @@ namespace TP2
 
             for (int i = 0; i < fo.Count; i++)
             {
-                //calcular la prob obs de cada elemento
+                //calcular la prob obs de cada elemento y agrego al vector
                 double po = fo[i] / N;
+                probObservadas.Add(Math.Round(po, 4));
 
                 //acumulamos probabilidades
                 poAc = po + poAc;
                 peAc = pe + peAc;
 
+                probObsAC.Add(Math.Round(poAc, 4));
+
                 double ks = Math.Abs(poAc - peAc);
+                ksUnitarios.Add(Math.Round(ks, 4));
 
                 //comparo con el maxKS actual
                 if (maxKS < ks)
                 {
                     maxKS = ks;
                 }
+                maxKSv.Add(Math.Round(maxKS, 4));
+
+
+
             }
 
             //return Math.Round(maxKS, 4);
-            return Math.Round(maxKS, 4);
+            return (Math.Round(maxKS, 4), limInf, limSup, fo, fe, probEsperadas, probEspAC,
+                probObservadas, probObsAC, ksUnitarios, maxKSv);
         }
 
         public static double KSExponencial(List<double> rnd, int N, double me)

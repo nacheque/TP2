@@ -42,6 +42,7 @@
             txtV = new TextBox();
             label3 = new Label();
             grdTablaChi = new DataGridView();
+            nroColumnaChi = new DataGridViewTextBoxColumn();
             LIChi = new DataGridViewTextBoxColumn();
             LSChi = new DataGridViewTextBoxColumn();
             foChi = new DataGridViewTextBoxColumn();
@@ -49,6 +50,7 @@
             C = new DataGridViewTextBoxColumn();
             Cac = new DataGridViewTextBoxColumn();
             grdTablaKS = new DataGridView();
+            nroColumnaKS = new DataGridViewTextBoxColumn();
             LIKS = new DataGridViewTextBoxColumn();
             LSKS = new DataGridViewTextBoxColumn();
             foKS = new DataGridViewTextBoxColumn();
@@ -175,11 +177,16 @@
             // grdTablaChi
             // 
             grdTablaChi.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            grdTablaChi.Columns.AddRange(new DataGridViewColumn[] { LIChi, LSChi, foChi, feChi, C, Cac });
+            grdTablaChi.Columns.AddRange(new DataGridViewColumn[] { nroColumnaChi, LIChi, LSChi, foChi, feChi, C, Cac });
             grdTablaChi.Location = new Point(326, 12);
             grdTablaChi.Name = "grdTablaChi";
             grdTablaChi.Size = new Size(647, 288);
             grdTablaChi.TabIndex = 11;
+            // 
+            // nroColumnaChi
+            // 
+            nroColumnaChi.HeaderText = "Nro";
+            nroColumnaChi.Name = "nroColumnaChi";
             // 
             // LIChi
             // 
@@ -214,11 +221,16 @@
             // grdTablaKS
             // 
             grdTablaKS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            grdTablaKS.Columns.AddRange(new DataGridViewColumn[] { LIKS, LSKS, foKS, feKS, PoKS, PeKS, PoAC, PeAC, difProb, maxDifProb });
+            grdTablaKS.Columns.AddRange(new DataGridViewColumn[] { nroColumnaKS, LIKS, LSKS, foKS, feKS, PoKS, PeKS, PoAC, PeAC, difProb, maxDifProb });
             grdTablaKS.Location = new Point(326, 306);
             grdTablaKS.Name = "grdTablaKS";
             grdTablaKS.Size = new Size(647, 257);
             grdTablaKS.TabIndex = 12;
+            // 
+            // nroColumnaKS
+            // 
+            nroColumnaKS.HeaderText = "Nro";
+            nroColumnaKS.Name = "nroColumnaKS";
             // 
             // LIKS
             // 
@@ -274,7 +286,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(985, 575);
+            ClientSize = new Size(979, 575);
             Controls.Add(grdTablaKS);
             Controls.Add(grdTablaChi);
             Controls.Add(label3);
@@ -315,13 +327,15 @@
         private TextBox txtV;
         private Label label3;
         private DataGridView grdTablaChi;
+        private DataGridView grdTablaKS;
+        private DataGridViewTextBoxColumn nroColumnaChi;
         private DataGridViewTextBoxColumn LIChi;
         private DataGridViewTextBoxColumn LSChi;
         private DataGridViewTextBoxColumn foChi;
         private DataGridViewTextBoxColumn feChi;
         private DataGridViewTextBoxColumn C;
         private DataGridViewTextBoxColumn Cac;
-        private DataGridView grdTablaKS;
+        private DataGridViewTextBoxColumn nroColumnaKS;
         private DataGridViewTextBoxColumn LIKS;
         private DataGridViewTextBoxColumn LSKS;
         private DataGridViewTextBoxColumn foKS;

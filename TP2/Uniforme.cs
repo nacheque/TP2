@@ -105,8 +105,14 @@ namespace TP2
 
             List<double> limInf = new List<double>();
             List<double> limSup = new List<double>();
+            List<int> fo = new List<int>();
+            List<int> fe = new List<int>();
+            List<double> cV = new List<double>();
+            List<double> cAC = new List<double>();
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            (double cc, int v, limInf, limSup) = ChiCuadradoTest.ChiCuadradoUniforme(datos, n);
+            (double cc, int v, limInf, limSup, fo, fe, cV, cAC) = 
+                ChiCuadradoTest.ChiCuadradoUniforme(datos, n);
+
             txtCC.Text = cc.ToString();
             txtV.Text = v.ToString();
 
@@ -119,6 +125,11 @@ namespace TP2
             {
                 grdTablaChi.Rows[i].Cells["LIChi"].Value = limInf[i].ToString();
                 grdTablaChi.Rows[i].Cells["LSChi"].Value = limSup[i].ToString();
+                grdTablaChi.Rows[i].Cells["foChi"].Value = fo[i].ToString();
+                grdTablaChi.Rows[i].Cells["feChi"].Value = fe[i].ToString();
+                grdTablaChi.Rows[i].Cells["C"].Value = cV[i].ToString();
+                grdTablaChi.Rows[i].Cells["Cac"].Value = cAC[i].ToString();
+                grdTablaChi.Rows[i].Cells["nroColumnaChi"].Value = i+1;
             }
 
         }
@@ -137,8 +148,40 @@ namespace TP2
                 }
             }
 
-            double ks = KS.KSUniforme(datos, datos.Count);
+            List<double> limInf = new List<double>();
+            List<double> limSup = new List<double>();
+            List<double> fo = new List<double>();
+            List<double> fe = new List<double>();
+            List<double> probEsperadas = new List<double>();
+            List<double> probEspAC = new List<double>();
+            List<double> probObservadas = new List<double>();
+            List<double> probObsAC = new List<double>();
+            List<double> ksUnitarios = new List<double>();
+            List<double> maxKSv = new List<double>();
+
+            (double ks, limInf, limSup, fo, fe, probEsperadas, probEspAC, 
+                probObservadas, probObsAC, ksUnitarios, maxKSv) = KS.KSUniforme(datos, datos.Count);
             txtKS.Text = ks.ToString();
+
+            if (grdTablaKS.Rows.Count < limInf.Count)
+            {
+                grdTablaKS.Rows.Add(limInf.Count - grdTablaKS.Rows.Count);
+            }
+
+            for (int i = 0; i < limInf.Count; i++)
+            {
+                grdTablaKS.Rows[i].Cells["LIKS"].Value = limInf[i].ToString();
+                grdTablaKS.Rows[i].Cells["LSKS"].Value = limSup[i].ToString();
+                grdTablaKS.Rows[i].Cells["foKS"].Value = fo[i].ToString();
+                grdTablaKS.Rows[i].Cells["feKS"].Value = fe[i].ToString();
+                grdTablaKS.Rows[i].Cells["PeKS"].Value = probEsperadas[i].ToString();
+                grdTablaKS.Rows[i].Cells["PeAC"].Value = probEspAC[i].ToString();
+                grdTablaKS.Rows[i].Cells["PoKS"].Value = probObservadas[i].ToString();
+                grdTablaKS.Rows[i].Cells["PoAC"].Value = probObsAC[i].ToString();
+                grdTablaKS.Rows[i].Cells["difProb"].Value = ksUnitarios[i].ToString();
+                grdTablaKS.Rows[i].Cells["maxDifProb"].Value = maxKSv[i].ToString();
+                grdTablaKS.Rows[i].Cells["nroColumnaKS"].Value = i+1;
+            }
         }
     }
 }

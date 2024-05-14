@@ -56,7 +56,8 @@ public class ChiCuadradoTest
         return true;
     }
 
-    public static (double, int, List<double>, List<double>) ChiCuadradoUniforme(List<double> rnd, int N)
+    public static (double, int, List<double>, List<double>, List<int>, List<int>,
+        List<double>, List<double>) ChiCuadradoUniforme(List<double> rnd, int N)
     {
         int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -100,8 +101,8 @@ public class ChiCuadradoTest
 
         for (int i = 0; i < cantIntervalos; i++)
         {
-            limInf.Add(intervalos[i, 0]);
-            limSup.Add(intervalos[i, 1]);
+            limInf.Add(Math.Round(intervalos[i, 0], 4));
+            limSup.Add(Math.Round(intervalos[i, 1], 4));
         }
         
         
@@ -128,14 +129,23 @@ public class ChiCuadradoTest
         //terminado el for que recorre la matriz de intervalos acabamos con 2 vectores
         //fo[] y fe[] que representan las frecuancias de la lista
         double chiCuadrado = 0;
+        double chiUnitario;
+
+        //Lista de chiCuadrados unitarios
+        List<double> cV = new List<double>();
+        //Lista de chiCuadrados Acumulados
+        List<double> cAC = new List<double>();
 
         //se acumula cada calculo del chi que se realiza para cada fo y fe
         for (int i = 0; i < cantIntervalos; i++)
         {
+            chiUnitario = Math.Pow(fo[i] - fe[i], 2) / fe[i];
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
+            cV.Add(Math.Round(chiUnitario, 4));
+            cAC.Add(Math.Round(chiCuadrado, 4));
         }
 
-        return (Math.Round(chiCuadrado, 4), cantIntervalos - 1, limInf, limSup);
+        return (Math.Round(chiCuadrado, 4), cantIntervalos - 1, limInf, limSup, fo, fe, cV, cAC);
     }
 
     public static (double, int) ChiCuadradoNormal(List<double> rnd, double media, double de)
