@@ -114,10 +114,33 @@ namespace TP2
                 }
             }
 
-            //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            (double cc, int v) = ChiCuadradoTest.ChiCuadradoNormal(datos, this.me, this.de);
+            List<double> limInf = new List<double>();
+            List<double> limSup = new List<double>();
+            List<int> fo = new List<int>();
+            List<double> fe = new List<double>();
+            List<double> cV = new List<double>();
+            List<double> cAC = new List<double>();
+
+            (double cc, int v, limInf, limSup, fo, fe,
+                cV, cAC) = ChiCuadradoTest.ChiCuadradoNormal(datos, this.me, this.de);
             txtCC.Text = cc.ToString();
             txtV.Text = v.ToString();
+
+            if (grdTablaChi.Rows.Count < limInf.Count)
+            {
+                grdTablaChi.Rows.Add(limInf.Count - grdTablaChi.Rows.Count);
+            }
+
+            for (int i = 0; i < limInf.Count; i++)
+            {
+                grdTablaChi.Rows[i].Cells["LIChi"].Value = limInf[i].ToString();
+                grdTablaChi.Rows[i].Cells["LSChi"].Value = limSup[i].ToString();
+                grdTablaChi.Rows[i].Cells["foChi"].Value = fo[i].ToString();
+                grdTablaChi.Rows[i].Cells["feChi"].Value = fe[i].ToString();
+                grdTablaChi.Rows[i].Cells["C"].Value = cV[i].ToString();
+                grdTablaChi.Rows[i].Cells["Cac"].Value = cAC[i].ToString();
+                grdTablaChi.Rows[i].Cells["nroColumnaChi"].Value = i + 1;
+            }
         }
 
         private void btnKS_Click(object sender, EventArgs e)
