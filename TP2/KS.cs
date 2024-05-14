@@ -175,7 +175,9 @@ namespace TP2
                 probObservadas, probObsAC, ksUnitarios, maxKSv);
         }
 
-        public static double KSExponencial(List<double> rnd, int N, double me)
+        public static (double, List<double>, List<double>,
+            List<double>, List<double>, List<double>, List<double>,
+            List<double>, List<double>, List<double>, List<double>) KSExponencial(List<double> rnd, int N, double me)
         {
             int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -203,6 +205,17 @@ namespace TP2
                     intervalos[i, 1] = supAnterior + amplitud;
                     supAnterior = supAnterior + amplitud;
                 }
+            }
+
+            //intento de llenar el DataGridView con los valores de la matriz de intervalos
+            // el vector intervalos por cada fila i tiene los dos valores de los limites
+            List<double> limInfv = new List<double>();
+            List<double> limSupv = new List<double>();
+
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                limInfv.Add(Math.Round(intervalos[i, 0], 4));
+                limSupv.Add(Math.Round(intervalos[i, 1], 4));
             }
 
             List<double> fo = new List<double>();
@@ -237,36 +250,65 @@ namespace TP2
                 pr_e.Add((1 - Math.Pow(e, -lambda * limSup)) - (1 - Math.Pow(e, -lambda * limInf)));
             }
 
+            //vector para mostrar frecuencias esperadas = probEsperada * N
+            List<double> fe = new List<double>();
+            for (int i = 0; i < pr_e.Count; i++)
+            {
+                fe.Add(Math.Round((pr_e[i] * N), 4));
+            }
+
+            //vectores para mostrar las probabilidades unitarias, acumuladas, ks, max ks
+
+            List<double> poUnitarios = new List<double>();
+            List<double> poAcumulados = new List<double>();
+            List<double> peUnitarios = new List<double>();
+            List<double> peAcumulados = new List<double>();
+            List<double> ksExp = new List<double>();
+            List<double> maxKSExp = new List<double>();
 
             double peAc = 0.0;
             double poAc = 0.0;
 
             double maxKS = 0.0;
 
-            for (int i = 0; i < fo.Count; i++)
+            for (int i = 0; i < cantIntervalos; i++)
             {
                 //calcular la prob obs de cada elemento
-                double po = fo[i] / N;
+                double po = fo[i] / rnd.Count();
+                poUnitarios.Add(Math.Round(po, 4));
+
                 double pe = pr_e[i];
+                peUnitarios.Add(Math.Round(pe, 4));
 
                 //acumulamos probabilidades
                 poAc = po + poAc;
+                poAcumulados.Add(Math.Round(poAc, 4));
                 peAc = pe + peAc;
+                peAcumulados.Add(Math.Round(peAc, 4));
+
+
+
 
                 double ks = Math.Abs(poAc - peAc);
+                ksExp.Add(Math.Round(ks, 4));
+
 
                 //comparo con el maxKS actual
                 if (maxKS < ks)
                 {
                     maxKS = ks;
                 }
+                maxKSExp.Add(Math.Round(maxKS, 4));
             }
 
-            return Math.Round(maxKS, 4);
+            return (Math.Round(maxKS, 4), limInfv, limSupv, fo, fe, poUnitarios, peUnitarios,
+                poAcumulados, peAcumulados, ksExp, maxKSExp);
             //return maxKS;
         }
 
-        public static double KSNormal(List<double> rnd, int N, double me, double de)
+        public static (double, List<double>, List<double>,
+            List<double>, List<double>, List<double>, List<double>,
+            List<double>, List<double>, List<double>, List<double>) KSNormal(List<double> rnd, int N, double me, double de)
         {
             int cantIntervalos = CalcularTamañoIntervalo(N);
 
@@ -294,6 +336,17 @@ namespace TP2
                     intervalos[i, 1] = supAnterior + amplitud;
                     supAnterior = supAnterior + amplitud;
                 }
+            }
+
+            //intento de llenar el DataGridView con los valores de la matriz de intervalos
+            // el vector intervalos por cada fila i tiene los dos valores de los limites
+            List<double> limInfv = new List<double>();
+            List<double> limSupv = new List<double>();
+
+            for (int i = 0; i < cantIntervalos; i++)
+            {
+                limInfv.Add(Math.Round(intervalos[i, 0], 4));
+                limSupv.Add(Math.Round(intervalos[i, 1], 4));
             }
 
             List<double> fo = new List<double>();
@@ -331,6 +384,21 @@ namespace TP2
                 pr_e.Add(pe_i);
             }
 
+            //vector para mostrar frecuencias esperadas = probEsperada * N
+            List<double> fe = new List<double>();
+            for (int i = 0; i < pr_e.Count; i++)
+            {
+                fe.Add(Math.Round((pr_e[i]*N), 4));
+            }
+
+            //vectores para mostrar las probabilidades unitarias, acumuladas, ks, max ks
+
+            List<double> poUnitarios = new List<double>();
+            List<double> poAcumulados = new List<double>();
+            List<double> peUnitarios = new List<double>();
+            List<double> peAcumulados = new List<double>();
+            List<double> ksNormal = new List<double>();
+            List<double> maxKSNormal = new List<double>();
 
             double peAc = 0.0;
             double poAc = 0.0;
@@ -342,17 +410,22 @@ namespace TP2
             {
                 //calcular la prob obs de cada elemento
                 double po = fo[i] / rnd.Count();
+                poUnitarios.Add(Math.Round(po, 4));
 
                 double pe = pr_e[i];
+                peUnitarios.Add(Math.Round(pe, 4));
 
                 //acumulamos probabilidades
                 poAc = po + poAc;
+                poAcumulados.Add(Math.Round(poAc, 4));
                 peAc = pe + peAc;
+                peAcumulados.Add(Math.Round(peAc, 4));
 
 
                 
 
                 double ks = Math.Abs(poAc - peAc);
+                ksNormal.Add(Math.Round(ks, 4));
 
 
                 //comparo con el maxKS actual
@@ -360,10 +433,13 @@ namespace TP2
                 {
                     maxKS = ks;
                 }
+                maxKSNormal.Add(Math.Round(maxKS, 4));
             }
 
+            
 
-            return Math.Round(maxKS, 4);
+            return (Math.Round(maxKS, 4), limInfv, limSupv, fo, fe,
+                poUnitarios, peUnitarios, poAcumulados, peAcumulados, ksNormal, maxKSNormal);
             //return maxKS;
         }
 

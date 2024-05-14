@@ -41,7 +41,29 @@
             txtKS = new TextBox();
             label3 = new Label();
             txtV = new TextBox();
+            grdTablaChi = new DataGridView();
+            nroColumnaChi = new DataGridViewTextBoxColumn();
+            LIChi = new DataGridViewTextBoxColumn();
+            LSChi = new DataGridViewTextBoxColumn();
+            foChi = new DataGridViewTextBoxColumn();
+            feChi = new DataGridViewTextBoxColumn();
+            C = new DataGridViewTextBoxColumn();
+            Cac = new DataGridViewTextBoxColumn();
+            grdTablaKS = new DataGridView();
+            nroColumnaKS = new DataGridViewTextBoxColumn();
+            LIKS = new DataGridViewTextBoxColumn();
+            LSKS = new DataGridViewTextBoxColumn();
+            foKS = new DataGridViewTextBoxColumn();
+            feKS = new DataGridViewTextBoxColumn();
+            PoKS = new DataGridViewTextBoxColumn();
+            PeKS = new DataGridViewTextBoxColumn();
+            PoAC = new DataGridViewTextBoxColumn();
+            PeAC = new DataGridViewTextBoxColumn();
+            difProb = new DataGridViewTextBoxColumn();
+            maxDifProb = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)grdNormal).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)grdTablaChi).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)grdTablaKS).BeginInit();
             SuspendLayout();
             // 
             // grdNormal
@@ -152,11 +174,121 @@
             txtV.Size = new Size(27, 23);
             txtV.TabIndex = 14;
             // 
+            // grdTablaChi
+            // 
+            grdTablaChi.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grdTablaChi.Columns.AddRange(new DataGridViewColumn[] { nroColumnaChi, LIChi, LSChi, foChi, feChi, C, Cac });
+            grdTablaChi.Location = new Point(290, 12);
+            grdTablaChi.Name = "grdTablaChi";
+            grdTablaChi.Size = new Size(647, 288);
+            grdTablaChi.TabIndex = 15;
+            // 
+            // nroColumnaChi
+            // 
+            nroColumnaChi.HeaderText = "Nro";
+            nroColumnaChi.Name = "nroColumnaChi";
+            // 
+            // LIChi
+            // 
+            LIChi.HeaderText = "Limite Inferior";
+            LIChi.Name = "LIChi";
+            // 
+            // LSChi
+            // 
+            LSChi.HeaderText = "Limite Superior";
+            LSChi.Name = "LSChi";
+            // 
+            // foChi
+            // 
+            foChi.HeaderText = "Frecuencia Observada";
+            foChi.Name = "foChi";
+            // 
+            // feChi
+            // 
+            feChi.HeaderText = "Frecuencia Esperada";
+            feChi.Name = "feChi";
+            // 
+            // C
+            // 
+            C.HeaderText = "C";
+            C.Name = "C";
+            // 
+            // Cac
+            // 
+            Cac.HeaderText = "C(AC)";
+            Cac.Name = "Cac";
+            // 
+            // grdTablaKS
+            // 
+            grdTablaKS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grdTablaKS.Columns.AddRange(new DataGridViewColumn[] { nroColumnaKS, LIKS, LSKS, foKS, feKS, PoKS, PeKS, PoAC, PeAC, difProb, maxDifProb });
+            grdTablaKS.Location = new Point(290, 306);
+            grdTablaKS.Name = "grdTablaKS";
+            grdTablaKS.Size = new Size(647, 257);
+            grdTablaKS.TabIndex = 16;
+            // 
+            // nroColumnaKS
+            // 
+            nroColumnaKS.HeaderText = "Nro";
+            nroColumnaKS.Name = "nroColumnaKS";
+            // 
+            // LIKS
+            // 
+            LIKS.HeaderText = "Limite Inferior";
+            LIKS.Name = "LIKS";
+            // 
+            // LSKS
+            // 
+            LSKS.HeaderText = "Limite Superior";
+            LSKS.Name = "LSKS";
+            // 
+            // foKS
+            // 
+            foKS.HeaderText = "Frecuencia Observada";
+            foKS.Name = "foKS";
+            // 
+            // feKS
+            // 
+            feKS.HeaderText = "Frecuencia Esperada";
+            feKS.Name = "feKS";
+            // 
+            // PoKS
+            // 
+            PoKS.HeaderText = "Prob Observada";
+            PoKS.Name = "PoKS";
+            // 
+            // PeKS
+            // 
+            PeKS.HeaderText = "Prob Esperada";
+            PeKS.Name = "PeKS";
+            // 
+            // PoAC
+            // 
+            PoAC.HeaderText = "PoAC";
+            PoAC.Name = "PoAC";
+            // 
+            // PeAC
+            // 
+            PeAC.HeaderText = "PeAC";
+            PeAC.Name = "PeAC";
+            // 
+            // difProb
+            // 
+            difProb.HeaderText = "| PoAC - PeAC |";
+            difProb.Name = "difProb";
+            // 
+            // maxDifProb
+            // 
+            maxDifProb.HeaderText = "max(| PoAC - PeAC |)";
+            maxDifProb.Name = "maxDifProb";
+            // 
             // Normal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(288, 558);
+            ClientSize = new Size(932, 558);
+            Controls.Add(grdTablaKS);
+            Controls.Add(grdTablaChi);
             Controls.Add(txtV);
             Controls.Add(label3);
             Controls.Add(txtKS);
@@ -173,6 +305,8 @@
             Text = "Normal[me, de]";
             Load += Normal_Load;
             ((System.ComponentModel.ISupportInitialize)grdNormal).EndInit();
+            ((System.ComponentModel.ISupportInitialize)grdTablaChi).EndInit();
+            ((System.ComponentModel.ISupportInitialize)grdTablaKS).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -192,5 +326,25 @@
         private TextBox txtKS;
         private Label label3;
         private TextBox txtV;
+        private DataGridView grdTablaChi;
+        private DataGridViewTextBoxColumn nroColumnaChi;
+        private DataGridViewTextBoxColumn LIChi;
+        private DataGridViewTextBoxColumn LSChi;
+        private DataGridViewTextBoxColumn foChi;
+        private DataGridViewTextBoxColumn feChi;
+        private DataGridViewTextBoxColumn C;
+        private DataGridViewTextBoxColumn Cac;
+        private DataGridView grdTablaKS;
+        private DataGridViewTextBoxColumn nroColumnaKS;
+        private DataGridViewTextBoxColumn LIKS;
+        private DataGridViewTextBoxColumn LSKS;
+        private DataGridViewTextBoxColumn foKS;
+        private DataGridViewTextBoxColumn feKS;
+        private DataGridViewTextBoxColumn PoKS;
+        private DataGridViewTextBoxColumn PeKS;
+        private DataGridViewTextBoxColumn PoAC;
+        private DataGridViewTextBoxColumn PeAC;
+        private DataGridViewTextBoxColumn difProb;
+        private DataGridViewTextBoxColumn maxDifProb;
     }
 }

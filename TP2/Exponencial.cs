@@ -118,9 +118,41 @@ namespace TP2
             }
 
 
-            //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            double cc = KS.KSExponencial(datos, datos.Count, this.me);
+            List<double> limInfv = new List<double>();
+            List<double> limSupv = new List<double>();
+            List<double> fo = new List<double>();
+            List<double> fe = new List<double>();
+            List<double> poUnitarios = new List<double>();
+            List<double> poAcumulados = new List<double>();
+            List<double> peUnitarios = new List<double>();
+            List<double> peAcumulados = new List<double>();
+            List<double> ksExp = new List<double>();
+            List<double> maxKSExp = new List<double>();
+
+
+            (double cc, limInfv, limSupv, fo, fe, poUnitarios, peUnitarios,
+                poAcumulados, peAcumulados, ksExp, maxKSExp) = KS.KSExponencial(datos, datos.Count, this.me);
             txtKS.Text = cc.ToString();
+
+            if (grdTablaKS.Rows.Count < limInfv.Count)
+            {
+                grdTablaKS.Rows.Add(limInfv.Count - grdTablaKS.Rows.Count);
+            }
+
+            for (int i = 0; i < limInfv.Count; i++)
+            {
+                grdTablaKS.Rows[i].Cells["LIKS"].Value = limInfv[i].ToString();
+                grdTablaKS.Rows[i].Cells["LSKS"].Value = limSupv[i].ToString();
+                grdTablaKS.Rows[i].Cells["foKS"].Value = fo[i].ToString();
+                grdTablaKS.Rows[i].Cells["feKS"].Value = fe[i].ToString();
+                grdTablaKS.Rows[i].Cells["PoKS"].Value = poUnitarios[i].ToString();
+                grdTablaKS.Rows[i].Cells["PeKS"].Value = peUnitarios[i].ToString();
+                grdTablaKS.Rows[i].Cells["PoAC"].Value = poAcumulados[i].ToString();
+                grdTablaKS.Rows[i].Cells["PeAC"].Value = peAcumulados[i].ToString();
+                grdTablaKS.Rows[i].Cells["difProb"].Value = ksExp[i].ToString();
+                grdTablaKS.Rows[i].Cells["maxDifProb"].Value = maxKSExp[i].ToString();
+                grdTablaKS.Rows[i].Cells["nroColumnaKS"].Value = i + 1;
+            }
         }
     }
 }
