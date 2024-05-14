@@ -337,7 +337,8 @@ public class ChiCuadradoTest
         return (Math.Round(chiCuadrado, 4), cantIntervalos - 3, limInf, limSup, fo, fe2, cV, cAC);
     }
 
-    public static (double, int) ChiCuadradoExponencial(List<double> rnd, double media)
+    public static (double, int, List<double>, List<double>,
+        List<int>, List<double>, List<double>, List<double>) ChiCuadradoExponencial(List<double> rnd, double media)
     {
         int N = rnd.Count;
 
@@ -484,16 +485,35 @@ public class ChiCuadradoTest
             cantIntervalos = cantidadIntervalosNuevos;
         }
 
+        //intento de llenar el DataGridView con los valores de la matriz de intervalos
+        // el vector intervalos por cada fila i tiene los dos valores de los limites
+        List<double> limInfv = new List<double>();
+        List<double> limSupv = new List<double>();
+
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            limInfv.Add(Math.Round(intervalos[i, 0], 4));
+            limSupv.Add(Math.Round(intervalos[i, 1], 4));
+        }
+
 
         double chiCuadrado = 0;
+        double chiUnitario;
+
+        List<double> chiUnitarios = new List<double>();
+        List<double> chiAcumulados = new List<double>();
 
         //se acumula cada calculo del chi que se realiza para cada fo y fe
         for (int i = 0; i < cantIntervalos; i++)
         {
+            chiUnitario = Math.Pow(fo[i] - fe[i], 2) / fe[i];
             chiCuadrado = chiCuadrado + Math.Pow(fo[i] - fe[i], 2) / fe[i];
+
+            chiUnitarios.Add(Math.Round(chiUnitario, 4));
+            chiAcumulados.Add(Math.Round(chiCuadrado, 4));
         }
 
-        return (Math.Round(chiCuadrado, 4), cantIntervalos - 2);
+        return (Math.Round(chiCuadrado, 4), cantIntervalos - 2, limInfv, limSupv, fo, fe, chiUnitarios, chiAcumulados);
 
     }
     }

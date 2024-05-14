@@ -97,10 +97,34 @@ namespace TP2
                 }
             }
 
+            List<double> limInfv = new List<double>();
+            List<double> limSupv = new List<double>();
+            List<int> fo = new List<int>();
+            List<double> fe = new List<double>();
+            List<double> chiUnitarios = new List<double>();
+            List<double> chiAcumulados = new List<double>();
+
             //ChiCuadradoTest cc = new ChiCuadradoTest(datos, "Uniforme");
-            (double cc, int v) = ChiCuadradoTest.ChiCuadradoExponencial(datos, this.me);
+            (double cc, int v, limInfv, limSupv, fo, fe,
+                chiUnitarios, chiAcumulados) = ChiCuadradoTest.ChiCuadradoExponencial(datos, this.me);
             txtCC.Text = cc.ToString();
             txtV.Text = v.ToString();
+
+            if (grdTablaChi.Rows.Count < limInfv.Count)
+            {
+                grdTablaChi.Rows.Add(limInfv.Count - grdTablaChi.Rows.Count);
+            }
+
+            for (int i = 0; i < limInfv.Count; i++)
+            {
+                grdTablaChi.Rows[i].Cells["LIChi"].Value = limInfv[i].ToString();
+                grdTablaChi.Rows[i].Cells["LSChi"].Value = limSupv[i].ToString();
+                grdTablaChi.Rows[i].Cells["foChi"].Value = fo[i].ToString();
+                grdTablaChi.Rows[i].Cells["feChi"].Value = fe[i].ToString();
+                grdTablaChi.Rows[i].Cells["C"].Value = chiUnitarios[i].ToString();
+                grdTablaChi.Rows[i].Cells["Cac"].Value = chiAcumulados[i].ToString();
+                grdTablaChi.Rows[i].Cells["nroColumnaChi"].Value = i+1;
+            }
         }
 
         private void btnKS_Click(object sender, EventArgs e)
