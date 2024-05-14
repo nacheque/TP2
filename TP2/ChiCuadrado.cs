@@ -201,8 +201,7 @@ public class ChiCuadradoTest
             fe.Add(poi * N);
         }
 
-        //DEPURACION
-
+        //VARIABLES PARA AGRUPAMIENTO
         List<double> feAcum = new List<double>();
         List<double[,]> intervalosNuevos = new List<double[,]>();
 
@@ -407,6 +406,85 @@ public class ChiCuadradoTest
 
         //terminado el for que recorre la matriz de intervalos acabamos con 2 vectores
         //fo[] y fe[] que representan las frecuancias de la lista
+
+        //VARIABLES PARA AGRUPAMIENTO
+        List<double> feAcum = new List<double>();
+        List<double[,]> intervalosNuevos = new List<double[,]>();
+
+        double feSum = 0;
+        double limiteInferior = 0;
+        double limiteSuperior;
+        bool huboCambioIntervalos = false;
+        double ultimoLS = 0;
+
+        //AGRUPAMIENTO
+        for (int i = 0; i < cantIntervalos; i++)
+        {
+            if (fe[i] < 5)
+            {
+                feSum = feSum + fe[i];
+                huboCambioIntervalos = true;
+                if (limiteInferior == 0)
+                {
+                    limiteInferior = intervalos[i, 0];
+                }
+                else
+                {
+                    if (limiteInferior < intervalos[i, 0] && feSum >= 5)
+                    {
+                        limiteSuperior = intervalos[i, 1];
+                        feAcum.Add(feSum);
+                        intervalosNuevos.Add(new double[,] { { limiteInferior, limiteSuperior } });
+                        feSum = 0;
+                        limiteInferior = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (feSum == 0)
+                {
+                    feAcum.Add(fe[i]);
+                    intervalosNuevos.Add(new double[,] { { intervalos[i, 0], intervalos[i, 1] } });
+                }
+                else
+                {
+                    feAcum.Add(fe[i] + feSum);
+                    intervalosNuevos.Add(new double[,] { { limiteInferior, intervalos[i, 1] } });
+                    feSum = 0;
+                    limiteInferior = 0;
+                }
+            }
+
+            if (i == (cantIntervalos - 1) && feSum > 0)
+            {
+                ultimoLS = intervalos[i, 1];
+            }
+        }
+
+        if (ultimoLS != 0)
+        {
+            feAcum[feAcum.Count - 1] += feSum;
+            double[,] ultimaMatriz = intervalosNuevos[intervalosNuevos.Count - 1];
+            int ultimaFila = ultimaMatriz.GetLength(0) - 1;
+            ultimaMatriz[ultimaFila, 1] = ultimoLS;
+        }
+
+        if (huboCambioIntervalos)
+        {
+            fe = feAcum;
+            int cantidadIntervalosNuevos = intervalosNuevos.Count;
+            double[,] matrizIntervalos = new double[cantidadIntervalosNuevos, 2];
+            for (int i = 0; i < cantidadIntervalosNuevos; i++)
+            {
+                matrizIntervalos[i, 0] = intervalosNuevos[i][0, 0]; // Límite inferior
+                matrizIntervalos[i, 1] = intervalosNuevos[i][0, 1]; // Límite superior
+            }
+            intervalos = matrizIntervalos;
+            cantIntervalos = cantidadIntervalosNuevos;
+        }
+
+
         double chiCuadrado = 0;
 
         //se acumula cada calculo del chi que se realiza para cada fo y fe
