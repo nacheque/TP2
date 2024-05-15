@@ -258,7 +258,7 @@ public class ChiCuadradoTest
 
         if(ultimoLS != 0)
         {
-            feAcum[feAcum.Count - 1] += feSum;
+            feAcum[feAcum.Count - 1] = feAcum[feAcum.Count - 1] + feSum;
             double[,] ultimaMatriz = intervalosNuevos[intervalosNuevos.Count - 1];
             int ultimaFila = ultimaMatriz.GetLength(0) - 1;
             ultimaMatriz[ultimaFila, 1] = ultimoLS;
@@ -307,7 +307,7 @@ public class ChiCuadradoTest
         {
             for (int j = 0; j < cantIntervalos; j++)
             {
-                if (rnd[i] >= intervalos[j, 0] && (rnd[i] < intervalos[j, 1] || rnd[i] == intervalos[cantIntervalos -1, 1]))
+                if (rnd[i] >= intervalos[j, 0] && (rnd[i] < intervalos[j, 1]))
                 {
                     fo[j]++;
                 }
